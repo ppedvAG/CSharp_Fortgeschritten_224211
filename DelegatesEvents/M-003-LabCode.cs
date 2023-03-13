@@ -5,17 +5,17 @@ public class Program
 		//Eigenen Code hier schreiben
 	}
 
-	public void Addition(double zahl1, double zahl2)
+	public static void Addition(double zahl1, double zahl2)
 	{
 		Console.WriteLine($"{zahl1} + {zahl2} = {zahl1 + zahl2}");
 	}
 
-	public void Subtraktion(double zahl1, double zahl2)
+	public static void Subtraktion(double zahl1, double zahl2)
 	{
 		Console.WriteLine($"{zahl1} - {zahl2} = {zahl1 - zahl2}");
 	}
 
-	public void Multiplikation(double zahl1, double zahl2)
+	public static void Multiplikation(double zahl1, double zahl2)
 	{
 		Console.WriteLine($"{zahl1} * {zahl2} = {zahl1 * zahl2}");
 	}
@@ -23,7 +23,7 @@ public class Program
 
 public class DivisionsCalculator
 {
-	public void Division(double zahl1, double zahl2)
+	public static void Division(double zahl1, double zahl2)
 	{
 		Console.WriteLine($"{zahl1} : {zahl2} = {zahl1 /  zahl2}");
 	}
