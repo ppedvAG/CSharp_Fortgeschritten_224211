@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using System.Xml;
 using System.Xml.Serialization;
@@ -35,7 +36,7 @@ internal class Program
 
 		//NewtonsoftJson();
 
-		SystemTextJson();
+		//SystemTextJson();
 
 		//XML();
 
@@ -101,12 +102,12 @@ internal class Program
 		{
 			new Fahrzeug(0, 251, FahrzeugMarke.BMW),
 			new Fahrzeug(1, 274, FahrzeugMarke.BMW),
-			new PKW(2, 146, FahrzeugMarke.BMW),
+			new Fahrzeug(2, 146, FahrzeugMarke.BMW),
 			new Fahrzeug(3, 208, FahrzeugMarke.Audi),
 			new Fahrzeug(4, 189, FahrzeugMarke.Audi),
 			new Fahrzeug(5, 133, FahrzeugMarke.VW),
 			new Fahrzeug(6, 253, FahrzeugMarke.VW),
-			new Schiff(7, 304, FahrzeugMarke.BMW),
+			new Fahrzeug(7, 304, FahrzeugMarke.BMW),
 			new Fahrzeug(8, 151, FahrzeugMarke.VW),
 			new Fahrzeug(9, 250, FahrzeugMarke.VW),
 			new Fahrzeug(10, 217, FahrzeugMarke.Audi),
@@ -115,8 +116,6 @@ internal class Program
 
 		JsonSerializerOptions options = new();
 		options.WriteIndented = true;
-		JsonTypeInfo info = JsonTypeInfo.CreateJsonTypeInfo<Fahrzeug>(options);
-		options.TypeInfoResolver = resolver;
 
 		string json = JsonSerializer.Serialize(fahrzeuge);
 		File.WriteAllText(filePath, json);
@@ -159,10 +158,6 @@ internal class Program
 			new Fahrzeug(10, 217, FahrzeugMarke.Audi),
 			new Fahrzeug(11, 125, FahrzeugMarke.Audi)
 		};
-
-		//NewtonsoftJson();
-
-		//SystemTextJson();
 
 		XmlSerializer xml = new XmlSerializer(fahrzeuge.GetType()); //XmlSerializer muss erstellt werden und braucht einen Typen
 		using (FileStream fs = new(filePath, FileMode.Create)) //Using-Block: wird am Ende des Blocks geschlossen
@@ -238,6 +233,9 @@ internal class Program
 }
 
 [Serializable]
+[JsonDerivedType(typeof(Fahrzeug), "F")] //Polymorphismus bei System.Text.Json serialisieren/deserialisieren
+//[JsonDerivedType(typeof(PKW), "P")] //Hier muss jeder Untertyp separat angegeben werden
+//[JsonDerivedType(typeof(Schiff), "S")]
 public class Fahrzeug
 {
 	//[XmlIgnore]
@@ -253,7 +251,7 @@ public class Fahrzeug
 	//[JsonProperty("FM")] //Feld umbenennen (Newtonsoft.Json)
 	public FahrzeugMarke Marke { get; set; }
 
-	public int AnzReifen; //Ohne Property wird dieses Feld nicht serialisiert (in Json)
+	//public int AnzReifen; //Ohne Property wird dieses Feld nicht serialisiert (in Json)
 
 	public Fahrzeug(int iD, int maxV, FahrzeugMarke marke)
 	{
@@ -265,20 +263,6 @@ public class Fahrzeug
 	public Fahrzeug()
 	{
 		//Für XML
-	}
-}
-
-public class PKW : Fahrzeug
-{
-	public PKW(int iD, int maxV, FahrzeugMarke marke) : base(iD, maxV, marke)
-	{
-	}
-}
-
-public class Schiff : Fahrzeug
-{
-	public Schiff(int iD, int maxV, FahrzeugMarke marke) : base(iD, maxV, marke)
-	{
 	}
 }
 
