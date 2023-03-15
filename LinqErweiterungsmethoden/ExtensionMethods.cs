@@ -1,4 +1,6 @@
-﻿namespace LinqErweiterungsmethoden;
+﻿using System.Text;
+
+namespace LinqErweiterungsmethoden;
 
 public static class ExtensionMethods
 {

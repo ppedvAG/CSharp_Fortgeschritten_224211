@@ -76,13 +76,13 @@ internal class Program
 
 		//Praktisches für Select
 		//Ohne Select
-		//string[] pfade = Directory.GetFiles("Test"); //Pfad + Dateieendung
-		//List<string> p = new();
-		//foreach (string s in pfade)
-		//	p.Add(Path.GetFileNameWithoutExtension(s));
+		string[] pfade = Directory.GetFiles("Test"); //Pfad + Dateieendung
+		List<string> p = new();
+		foreach (string s in pfade)
+			p.Add(Path.GetFileNameWithoutExtension(s));
 
 		////Mit Select
-		//Directory.GetFiles("Test").Select(e => Path.GetFileNameWithoutExtension(e)).ToList();
+		Directory.GetFiles("Test").Select(e => Path.GetFileNameWithoutExtension(e)).ToList();
 
 		//Fahren alle Fahrzeuge schneller als 200km/h?
 		fahrzeuge.All(e => e.MaxV > 200);
@@ -180,7 +180,7 @@ internal class Program
 			}
 		}
 
-		IEnumerable<KeyValuePair<string, int>> top10 = anzahlen.OrderByDescending(e => e.Key).Take(10);
+		IEnumerable<KeyValuePair<string, int>> top10 = anzahlen.OrderByDescending(e => e.Value).Take(10);
 
 		StringBuilder sb = new StringBuilder();
 		sb.AppendLine("Die häufigsten Wörter sind:");
